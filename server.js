@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 7890;
 
 const ensureAuth = require('./lib/auth/ensure-auth');
 const createAuthRoutes = require('./lib/auth/create-auth-routes');
+
+
 const authRoutes = createAuthRoutes({
   selectUser(email) {
     return client.query(`
@@ -48,7 +50,7 @@ app.get('/api/test', (req, res) => {
   });
 });
 
-app.get('/todo', async(req, res) => {
+app.get('/api/todo', async(req, res) => {
   const data = await client.query('SELECT * from todo');
 
   res.json(data.rows);
