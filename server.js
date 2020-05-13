@@ -79,7 +79,7 @@ app.put('/api/todo/:id', async(req, res) => {
     WHERE id = $1 AND owner_id = $2
     RETURNING *`, 
     [(req.params.id), req.body.owner_id]);
-   console.log(data)
+   
   res.json(data.rows);
 });
 
