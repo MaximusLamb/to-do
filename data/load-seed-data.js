@@ -27,7 +27,8 @@ async function run() {
       todo.map(stuff => {
         return client.query(`
                     INSERT INTO todo (todo, completed, owner_id)
-                    VALUES ($1, $2, $3);
+                    VALUES ($1, $2, $3)
+                    RETURNING *
                 `,
         [stuff.todo, stuff.completed, user.id]);
       })

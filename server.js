@@ -56,6 +56,27 @@ app.get('/api/todo', async(req, res) => {
   res.json(data.rows);
 });
 
+app.post('/api/new', async(req, res) => {
+
+  try {
+    const data = await client.query(`INSERT into todo (todo, completed, owner_id)
+  values ($1, $2, $3)
+  RETURNING *`,
+    [req.body.todo, req.body.completed, req.body.owner_id]);
+
+    res.json(data.rows[0]);
+  } catch(e) {
+    console.log(e);
+    res.json(e);
+  }
+});
+
+// app.put('/api/new/todo', async(req, res) => {
+//   const data = await client.query('SELECT * from todo');
+
+//   res.json(data.rows);
+// });
+
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Started on ${PORT}`);
