@@ -71,11 +71,17 @@ app.post('/api/new', async(req, res) => {
   }
 });
 
-// app.put('/api/new/todo', async(req, res) => {
-//   const data = await client.query('SELECT * from todo');
-
-//   res.json(data.rows);
-// });
+app.put('/api/todo/:id', async(req, res) => {
+  
+  const data = await client.query(
+    `UPDATE todo 
+    SET completed = true 
+    WHERE id = $1 AND owner_id = $2
+    RETURNING *`, 
+    [(req.params.id), req.body.owner_id]);
+   console.log(data)
+  res.json(data.rows);
+});
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
