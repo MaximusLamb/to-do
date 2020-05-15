@@ -62,7 +62,7 @@ app.post('/api/new', async(req, res) => {
     const data = await client.query(`INSERT into todo (todo, completed, owner_id)
   values ($1, $2, $3)
   RETURNING *`,
-    [req.body.todo, req.body.completed, req.body.owner_id]);
+    [req.body.todo, req.body.completed, req.userId]);
 
     res.json(data.rows[0]);
   } catch(e) {
@@ -78,7 +78,7 @@ app.put('/api/todo/:id', async(req, res) => {
     SET completed = true 
     WHERE id = $1 AND owner_id = $2
     RETURNING *`, 
-    [(req.params.id), req.body.owner_id]);
+    [(req.params.id), req.userId]);
    
   res.json(data.rows);
 });
